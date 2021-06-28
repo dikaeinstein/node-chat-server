@@ -1,4 +1,4 @@
-# node-chat-server
+# node-chat-server [![Build Status](https://github.com/dikaeinstein/node-chat-server/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dikaeinstein/node-chat-server/actions)
 
 A node chat server that allows participants to submit an HTML form to connect with their name and preferred locale, and sends messages to everyone connected via WebSockets.
 

@@ -35,9 +35,9 @@ The following commands can be used via `npm`:
 
 - `build` - builds the application using `Typescript` and outputs the artifact into the `dist` directory.
 - `lint` — lints the entire application via `eslint`
-- `start` — runs the API via `node`
+- `start` — runs the server via `node`
 - `test` — runs all unit tests via `jest`
-- `dev` — runs the API via `tsc-watch` (useful when developing locally)
+- `dev` — runs the server via `tsc-watch` (useful when developing locally)
 
 ## Developing Locally
 

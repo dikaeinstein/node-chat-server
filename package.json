@@ -48,7 +48,8 @@
     "typescript": "^4.3.4"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown",
+    "src/*.ts": "eslint --fix"
   },
   "engines": {
     "node": ">=12",

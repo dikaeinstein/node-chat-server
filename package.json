@@ -5,12 +5,13 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint src/* --ext .ts",
     "clean": "rm -rf dist/*",
-    "prebuild": "npm run clean && npm run lint",
+    "dev": "tsc-watch --onSuccess \"npm run start:node\"",
+    "lint": "eslint src/* --ext .ts",
+    "prebuild": "npm run clean",
     "prepare": "husky install",
-    "start": "node dist/server",
-    "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "start:node": "TS_NODE_PROJECT=tsconfig.prod.json node -r tsconfig-paths/register dist/index.js",
+    "start": "npm run start:node",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -45,6 +46,7 @@
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.3",
     "tsc-watch": "^4.4.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.3.4"
   },
   "lint-staged": {

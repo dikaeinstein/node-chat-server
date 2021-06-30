@@ -4,7 +4,7 @@
   "description": "A node chat server that allows participants to submit an HTML form to connect with their name and preferred locale, and sends messages to everyone connected via WebSockets.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist/*",
     "dev": "tsc-watch --onSuccess \"npm run start:node\"",
     "lint": "eslint src/* --ext .ts",

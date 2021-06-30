@@ -1,5 +1,23 @@
 {
-  "extends": "./tsconfig.base.json",
-  "exclude": ["node_modules", "**/*.spec.ts", "__test__"],
+  "compilerOptions": {
+    "lib": ["es2019", "es2020.promise", "es2020.bigint", "es2020.string"],
+    "module": "commonjs",
+    "target": "es2019",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": false,
+
+    "baseUrl": "./src",
+    "outDir": "dist",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "exclude": ["node_modules"],
   "include": ["src"]
 }

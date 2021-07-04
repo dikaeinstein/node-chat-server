@@ -2,15 +2,10 @@
 
 A node chat server that allows participants to submit an HTML form to connect with their name and preferred locale, and sends messages to everyone connected via WebSockets.
 
-## Project Structure
-
-- TODO
-
 ## Requirements
 
 - Node.js 12.x
 - npm
-- Docker
 
 ## Getting Started
 
@@ -25,9 +20,12 @@ npm install
 npm start or npm run dev
 ```
 
-You should now be able to access the API via http://localhost:4900.
+You should now be able to access the chat app via http://localhost:4900.
 
-**NOTE:** You may need to modify the `.env` file configuration if the defaults in are not suitable for your environment.
+**NOTE:**
+
+- You may need to modify the `.env` file configuration if the defaults in are not suitable for your environment.
+- Changes in the `.env` file are not automatically loaded. You have to start the app manually when you make an update to the `.env` file.
 
 ## Available Commands
 
@@ -38,13 +36,3 @@ The following commands can be used via `npm`:
 - `start` — runs the server via `node`
 - `test` — runs all unit tests via `jest`
 - `dev` — runs the server via `tsc-watch` (useful when developing locally)
-
-## Developing Locally
-
-### Using tsc-watch
-
-```sh
-npm run dev
-```
-
-This command will run `tsc-watch` to start the application and automatically restart it when code changes are detected.

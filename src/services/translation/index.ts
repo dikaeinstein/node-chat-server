@@ -29,10 +29,7 @@ class TranslationService implements ITranslationService {
       )
     }
 
-    if (
-      sourceLang !== undefined &&
-      !this.translator.isLangSupported(sourceLang)
-    ) {
+    if (sourceLang != null && !this.translator.isLangSupported(sourceLang)) {
       throw new LangNotSupportedError(
         `sourceLang ${sourceLang} not supported by the translator`,
       )
@@ -41,7 +38,7 @@ class TranslationService implements ITranslationService {
     return this.translator.translate({
       source,
       targetLang: Lang[targetLang],
-      ...(sourceLang !== undefined ? { sourceLang: Lang[sourceLang] } : {}),
+      ...(sourceLang != null ? { sourceLang: Lang[sourceLang] } : {}),
     })
   }
 }

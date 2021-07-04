@@ -32,7 +32,7 @@ class DeepL implements Translator {
   async translate(params: TranslatorParams): Promise<string> {
     try {
       let url = `/translate?auth_key=${this.config.DEEPL_AUTH_KEY}&text=${params.source}&target_lang=${params.targetLang}`
-      if (params.sourceLang !== undefined) {
+      if (params.sourceLang != null) {
         url += `source_lang=${params.sourceLang}`
       }
 

@@ -9,7 +9,7 @@ interface Overrides {
 const makeLocalTranslator = (overrides: Overrides = {}): Translator => {
   return {
     isLangSupported(lang: KeyOfLang): boolean {
-      if (overrides.isLangSupported !== undefined) {
+      if (overrides.isLangSupported != null) {
         return overrides.isLangSupported(lang)
       }
 

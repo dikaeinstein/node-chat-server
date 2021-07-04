@@ -1,4 +1,4 @@
-import { KeyOfLang, Lang } from '@/enums/locale'
+import { KeyOfLang } from '@/enums/locale'
 import makeLocalTranslator from '@/__test__/fixtures/translator'
 import TranslationService, { LangNotSupportedError } from '.'
 
@@ -28,26 +28,26 @@ describe('TranslationService', () => {
 
   test('throws when sourceLang is not supported by translator', () => {
     const localTranslator = makeLocalTranslator({
-      isLangSupported: (lang: KeyOfLang) => lang !== 'German',
+      isLangSupported: (lang: KeyOfLang) => lang === 'German',
     })
     const translationService = new TranslationService(localTranslator)
 
     expect(() =>
       translationService.translate({
         source: 'Hello world',
-        sourceLang: 'Lithuanian',
+        sourceLang: 'Latvian',
         targetLang: 'German',
       }),
     ).toThrow(
       new LangNotSupportedError(
-        `sourceLang ${Lang.Lithuanian} not supported by the translator`,
+        `sourceLang Latvian not supported by the translator`,
       ),
     )
   })
 
   test('throws when targetLang is not supported by translator', () => {
     const localTranslator = makeLocalTranslator({
-      isLangSupported: (lang: KeyOfLang) => lang !== 'English (British)',
+      isLangSupported: (lang: KeyOfLang) => lang === 'English (British)',
     })
     const translationService = new TranslationService(localTranslator)
 
@@ -55,11 +55,11 @@ describe('TranslationService', () => {
       translationService.translate({
         source: 'Hello world',
         sourceLang: 'English (British)',
-        targetLang: 'Lithuanian',
+        targetLang: 'Latvian',
       }),
     ).toThrow(
       new LangNotSupportedError(
-        `targetLang ${Lang.Lithuanian} not supported by the translator`,
+        `targetLang Latvian not supported by the translator`,
       ),
     )
   })

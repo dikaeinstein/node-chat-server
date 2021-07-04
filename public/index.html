@@ -4,22 +4,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/index.css" />
     <title>Login</title>
   </head>
   <body>
-    <!-- login form -->
-    <form name="login" action="http://localhost:4900/login" method="POST">
-      <p>
-        <label for="username">Username:</label>
-        <input type="text" name="username" required />
-      </p>
-      <p>
-        <label for="locale">Locale:</label>
-        <select name="locale" id="locale" required></select>
-      </p>
-      <input type="submit" value="Login" />
-    </form>
-
+    <main class="container">
+      <header><h2>Login To Chat</h2></header>
+      <section class="login">
+        <form name="login" action="http://localhost:4900/login" method="POST">
+          <p>
+            <label for="username">Username:</label>
+            <input type="text" name="username" required class="input" />
+          </p>
+          <p>
+            <label for="locale">Locale:</label>
+            <select name="locale" id="locale" required class="input"></select>
+          </p>
+          <input type="submit" value="Login" id="loginButton" class="input" />
+        </form>
+      </section>
+    </main>
     <script src="./js/index.js"></script>
   </body>
 </html>

@@ -1,0 +1,114 @@
+body {
+  height: 100%;
+  margin-right: 30px;
+}
+
+header {
+  text-align: center;
+  margin: 15px;
+}
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.container {
+  width: 100%;
+  padding: 15px;
+}
+
+.row {
+  display: flex;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.login form {
+  width: 50%;
+  padding: 15px;
+  text-align: center;
+}
+
+.input,
+select {
+  height: 35px;
+  border-radius: 3px;
+}
+
+.login p input,
+.login p select {
+  width: 50%;
+}
+
+#loginButton {
+  margin-bottom: 15px;
+  width: 25%;
+  height: auto;
+  padding: 10px;
+}
+
+aside {
+  flex: 33%;
+  padding: 15px;
+  margin: 15px;
+  background-color: lightgray;
+  height: calc(100vh - 150px);
+}
+
+section.main {
+  flex: 66%;
+  padding: 15px;
+  margin: 15px;
+}
+
+#messages {
+  height: calc(100vh - 240px);
+  margin-bottom: 60px;
+}
+
+.myMessage,
+.message {
+  background: #4e4b4b;
+  border-radius: 5px;
+  width: 33%;
+  padding: 15px;
+  margin: 5px;
+  color: white;
+}
+
+.myMessage {
+  background: lightgray;
+  margin-left: auto;
+}
+
+#users li::before {
+  content: '\2022';
+  color: green;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+#send {
+  margin-left: 15px;
+  width: 20%;
+  height: auto;
+  padding: 9px;
+}
+
+#publish {
+  width: 100%;
+  margin-top: 15px;
+}
+
+#messageInput {
+  width: 75%;
+}

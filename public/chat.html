@@ -4,22 +4,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/index.css" />
     <title>Chat</title>
   </head>
   <body>
-    <main>
-      <header>Chat</header>
-      <aside>
-        <ul id="users"></ul>
-      </aside>
-      <!-- div with messages -->
-      <div id="messages"></div>
-      <!-- message form -->
-      <form name="publish" id="publish">
-        <input type="text" name="message" />
-        <br />
-        <input type="submit" value="Send" id="send" />
-      </form>
+    <main class="container">
+      <header><h2>Chat</h2></header>
+      <div class="row">
+        <aside>
+          <ul id="users"></ul>
+        </aside>
+        <section class="main">
+          <!-- div with messages -->
+          <div id="messages"></div>
+          <!-- message form -->
+          <form name="publish" id="publish">
+            <input type="text" name="message" id="messageInput" class="input" />
+            <input type="submit" value="Send" id="send" class="input" />
+          </form>
+        </section>
+      </div>
     </main>
     <script src="js/chat.js"></script>
   </body>

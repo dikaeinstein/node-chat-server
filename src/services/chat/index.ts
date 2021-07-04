@@ -43,6 +43,13 @@ interface ProcessClientMessageParams {
   ws: WebSocket
 }
 
+interface BroadcastMessageParams<T> {
+  id: string
+  ws: WebSocket
+  msgBuilder: MessageBuilder<T>
+  sendToSelf?: boolean
+}
+
 type MessageBuilder<T> = (user: User, ws?: WebSocket) => T | Promise<T>
 
 export interface ChatServiceOptions {
@@ -107,22 +114,23 @@ class ChatService {
     })
   }
 
-  broadcastMessage = async <T>(
-    id: string,
-    ws: WebSocket,
-    msgBuilder: MessageBuilder<T>,
-  ): Promise<void> => {
+  broadcastMessage = async <T>({
+    id,
+    ws,
+    msgBuilder,
+    sendToSelf = false,
+  }: BroadcastMessageParams<T>): Promise<void> => {
     for (const [userId, client] of this.wsStore.entries()) {
-      if (
-        userId !== id &&
-        client !== ws &&
-        client.readyState === WebSocket.OPEN
-      ) {
+      const isNotSelf = userId !== id && client !== ws
+      const sendToSelfChecker = sendToSelf ? true : isNotSelf
+
+      if (sendToSelfChecker && client.readyState === WebSocket.OPEN) {
         const user = this.store.getUser(userId)
 
         if (user != null) {
           const result = msgBuilder(user, ws)
           const data = result instanceof Promise ? await result : result
+
           client.send(JSON.stringify(data), (err) => {
             if (err != null) throw err
           })
@@ -140,13 +148,17 @@ class ChatService {
     switch (type) {
       case 'broadcast': {
         const { data } = message as MessageOf<string>
-        await this.broadcastMessage(userId, ws, async (user) => {
-          const translatedText = await this.translationService.translate({
-            source: data,
-            targetLang: user.locale,
-          })
+        await this.broadcastMessage({
+          id: userId,
+          ws,
+          msgBuilder: async (user) => {
+            const translatedText = await this.translationService.translate({
+              source: data,
+              targetLang: user.locale,
+            })
 
-          return { type: 'message', data: translatedText }
+            return { type: 'message', data: translatedText }
+          },
         })
         break
       }
@@ -177,9 +189,14 @@ class ChatService {
       this.wsStore.set(userId, ws)
 
       // Notify clients when a new user/client joins
-      void this.broadcastMessage<MessageOf<User[]>>(userId, ws, (user) => {
-        const users = this.store.getUsers().filter((u) => u.id !== user.id)
-        return { type: 'userList', data: users }
+      void this.broadcastMessage<MessageOf<User[]>>({
+        id: userId,
+        ws,
+        msgBuilder: (user) => {
+          const users = this.store.getUsers().filter((u) => u.id !== user.id)
+          return { type: 'userList', data: users }
+        },
+        sendToSelf: true,
       })
 
       ws.on('message', this.handleMessage(userId, ws) as unknown as Listener)

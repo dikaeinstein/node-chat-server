@@ -10,7 +10,7 @@
     "lint": "eslint src/* --ext .ts",
     "prebuild": "npm run clean",
     "prepare": "husky install",
-    "start:node": "TS_NODE_PROJECT=tsconfig.prod.json node -r tsconfig-paths/register dist/index.js",
+    "start:node": "TS_NODE_PROJECT=tsconfig.prod.json node -r tsconfig-paths/register --enable-source-maps dist/index.js",
     "start": "npm run start:node",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -27,9 +27,12 @@
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.12",
+    "@types/express-session": "^1.17.3",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.5",
     "@types/pino": "^6.3.8",
+    "@types/uuid": "^8.3.0",
+    "@types/ws": "^7.4.5",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
     "eslint": "^7.29.0",
@@ -61,6 +64,9 @@
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "pino": "^6.11.3"
+    "express-session": "^1.17.2",
+    "pino": "^6.11.3",
+    "uuid": "^8.3.2",
+    "ws": "^7.5.1"
   }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <!-- login form -->
+    <form name="login" action="http://localhost:4900/login" method="POST">
+      <p>
+        <label for="username">Username:</label>
+        <input type="text" name="username" required />
+      </p>
+      <p>
+        <label for="locale">Locale:</label>
+        <select name="locale" id="locale" required></select>
+      </p>
+      <input type="submit" value="Login" />
+    </form>
+
+    <script src="./js/index.js"></script>
+  </body>
+</html>

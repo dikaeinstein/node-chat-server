@@ -11,6 +11,8 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "noUnusedLocals": false,
+    "sourceMap": true,
+    "typeRoots": ["./typings", "./node_modules/@types"],
 
     "baseUrl": "./src",
     "outDir": "dist",

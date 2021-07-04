@@ -1,5 +1,6 @@
+import { KeyOfLang, Lang } from '@/enums/locale'
 import makeLocalTranslator from '@/__test__/fixtures/translator'
-import TranslationService, { AvailableLanguage, LangNotSupportedError } from '.'
+import TranslationService, { LangNotSupportedError } from '.'
 
 describe('TranslationService', () => {
   test('can translate text', () => {
@@ -8,8 +9,8 @@ describe('TranslationService', () => {
 
     const translatedText = translationService.translate({
       source: 'Hello world',
-      sourceLang: AvailableLanguage.En,
-      targetLang: AvailableLanguage.De,
+      sourceLang: 'English (British)',
+      targetLang: 'German',
     })
     expect(translatedText).toEqual('Hallo Welt!')
   })
@@ -20,47 +21,45 @@ describe('TranslationService', () => {
 
     const translatedText = translationService.translate({
       source: 'Hello world',
-      targetLang: AvailableLanguage.De,
+      targetLang: 'German',
     })
     expect(translatedText).toEqual('Hallo Welt!')
   })
 
   test('throws when sourceLang is not supported by translator', () => {
     const localTranslator = makeLocalTranslator({
-      isLangSupported: (lang: AvailableLanguage) =>
-        lang === AvailableLanguage.De || lang === AvailableLanguage.En,
+      isLangSupported: (lang: KeyOfLang) => lang !== 'German',
     })
     const translationService = new TranslationService(localTranslator)
 
     expect(() =>
       translationService.translate({
         source: 'Hello world',
-        sourceLang: AvailableLanguage.Lt,
-        targetLang: AvailableLanguage.De,
+        sourceLang: 'Lithuanian',
+        targetLang: 'German',
       }),
     ).toThrow(
       new LangNotSupportedError(
-        `sourceLang ${AvailableLanguage.Lt} not supported by the translator`,
+        `sourceLang ${Lang.Lithuanian} not supported by the translator`,
       ),
     )
   })
 
   test('throws when targetLang is not supported by translator', () => {
     const localTranslator = makeLocalTranslator({
-      isLangSupported: (lang: AvailableLanguage) =>
-        lang === AvailableLanguage.De || lang === AvailableLanguage.En,
+      isLangSupported: (lang: KeyOfLang) => lang !== 'English (British)',
     })
     const translationService = new TranslationService(localTranslator)
 
     expect(() =>
       translationService.translate({
         source: 'Hello world',
-        sourceLang: AvailableLanguage.En,
-        targetLang: AvailableLanguage.Lt,
+        sourceLang: 'English (British)',
+        targetLang: 'Lithuanian',
       }),
     ).toThrow(
       new LangNotSupportedError(
-        `targetLang ${AvailableLanguage.Lt} not supported by the translator`,
+        `targetLang ${Lang.Lithuanian} not supported by the translator`,
       ),
     )
   })

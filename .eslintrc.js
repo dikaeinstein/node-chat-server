@@ -15,4 +15,8 @@ module.exports = {
     'plugin:jest/recommended',
     'plugin:jest/style',
   ],
+  rules: {
+    'no-void': ['error', { allowAsStatement: true }],
+    '@typescript-eslint/no-floating-promises': 'error',
+  },
 }

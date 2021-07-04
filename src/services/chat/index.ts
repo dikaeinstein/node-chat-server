@@ -30,6 +30,21 @@ export interface ITranslationService {
   translate: (params: TranslateParams) => string | Promise<string>
 }
 
+interface Message {
+  type: 'broadcast' | 'message' | 'userList'
+}
+interface MessageOf<T> extends Message {
+  data: T
+}
+
+interface ProcessClientMessageParams {
+  message: unknown
+  userId: string
+  ws: WebSocket
+}
+
+type MessageBuilder<T> = (user: User, ws?: WebSocket) => T | Promise<T>
+
 export interface ChatServiceOptions {
   logger: Logger
   server: http.Server
@@ -92,10 +107,10 @@ class ChatService {
     })
   }
 
-  handleBroadcast = async (
+  broadcastMessage = async <T>(
     id: string,
     ws: WebSocket,
-    data: WebSocket.Data,
+    msgBuilder: MessageBuilder<T>,
   ): Promise<void> => {
     for (const [userId, client] of this.wsStore.entries()) {
       if (
@@ -106,20 +121,48 @@ class ChatService {
         const user = this.store.getUser(userId)
 
         if (user != null) {
-          const translatedText = await this.translationService.translate({
-            source: data as string,
-            targetLang: user.locale,
+          const result = msgBuilder(user, ws)
+          const data = result instanceof Promise ? await result : result
+          client.send(JSON.stringify(data), (err) => {
+            if (err != null) throw err
           })
-          client.send(translatedText)
         }
       }
     }
   }
 
-  handleMessage = (userId: string, ws: WebSocket) => {
+  private async processClientMessage({
+    message,
+    userId,
+    ws,
+  }: ProcessClientMessageParams): Promise<void> {
+    const { type } = message as Message
+    switch (type) {
+      case 'broadcast': {
+        const { data } = message as MessageOf<string>
+        await this.broadcastMessage(userId, ws, async (user) => {
+          const translatedText = await this.translationService.translate({
+            source: data,
+            targetLang: user.locale,
+          })
+
+          return { type: 'message', data: translatedText }
+        })
+        break
+      }
+      case 'message':
+        /* should be used for personal/private messages */
+        break
+      default:
+        throw new Error('unknown clientMessage type')
+    }
+  }
+
+  handleMessage(userId: string, ws: WebSocket) {
     return async (message: WebSocket.Data) => {
       try {
-        await this.handleBroadcast(userId, ws, message)
+        const clientMessage = JSON.parse(message as string)
+        await this.processClientMessage({ message: clientMessage, userId, ws })
       } catch (error) {
         this.logger.error(error)
       }
@@ -132,6 +175,12 @@ class ChatService {
     this.wss.on('connection', (ws, request) => {
       const userId = (request as Request).session.userId
       this.wsStore.set(userId, ws)
+
+      // Notify clients when a new user/client joins
+      void this.broadcastMessage<MessageOf<User[]>>(userId, ws, (user) => {
+        const users = this.store.getUsers().filter((u) => u.id !== user.id)
+        return { type: 'userList', data: users }
+      })
 
       ws.on('message', this.handleMessage(userId, ws) as unknown as Listener)
     })

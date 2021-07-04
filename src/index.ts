@@ -6,13 +6,13 @@ import dotenv from 'dotenv'
 import session from 'express-session'
 import WebSocket from 'ws'
 
-import ChatService from './services/chat'
-import createConfig from './config'
-import createLogger from './logger'
-import createApp from './app'
-import DeepL from './lib/deepL'
-import InMemoryStore from './storage/inmem'
-import TranslationService from './services/translation'
+import ChatService from '@/services/chat'
+import createConfig from '@/config'
+import createLogger from '@/logger'
+import createApp from '@/app'
+import DeepL from '@/lib/deepL'
+import InMemoryStore from '@/storage/inmem'
+import TranslationService from '@/services/translation'
 
 dotenv.config()
 

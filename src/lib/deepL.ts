@@ -1,3 +1,5 @@
+import assert from 'assert'
+
 import type { AxiosInstance } from 'axios'
 import type { Logger } from 'pino'
 
@@ -22,7 +24,9 @@ class DeepL implements Translator {
     private readonly config: DeepLConfig,
     private readonly client: AxiosInstance,
     private readonly logger: Logger,
-  ) {}
+  ) {
+    assert(config.DEEPL_AUTH_KEY, 'DEEPL_AUTH_KEY must be specified')
+  }
 
   isLangSupported(lang: KeyOfLang): boolean {
     const foundLocale = Lang[lang]

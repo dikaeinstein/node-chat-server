@@ -24,7 +24,7 @@ You should now be able to access the chat app via http://localhost:4900.
 
 **NOTE:**
 
-- You may need to modify the `.env` file configuration if the defaults in are not suitable for your environment.
+- You may need to modify the `.env` file configuration if the defaults are not suitable for your environment.
 - Changes in the `.env` file are not automatically loaded. You have to start the app manually when you make an update to the `.env` file.
 
 ## Available Commands

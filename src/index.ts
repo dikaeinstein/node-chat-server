@@ -24,7 +24,7 @@ const port = config.SERVER_PORT
 
 const sessionParser = session({
   saveUninitialized: false,
-  secret: '$eCuRiTy',
+  secret: config.SESSION_SECRET,
   resave: false,
 })
 const wsStore = new Map<string, WebSocket>()
